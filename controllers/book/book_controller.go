@@ -2,10 +2,12 @@ package book
 
 import (
 	"fmt"
-	"github.com/IgancioRey/books_microservice/dtos"
-	service "github.com/IgancioRey/books_microservice/services"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	dtos "github.com/IgancioRey/books_microservice/dtos/book"
+	service "github.com/IgancioRey/books_microservice/services/book"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Insert(c *gin.Context) {
@@ -24,7 +26,7 @@ func Insert(c *gin.Context) {
 
 	// Error del Insert
 	if er != nil {
-		c.JSON(er.Status(), er)
+		c.JSON(http.StatusInternalServerError, er)
 		return
 	}
 

@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/IgancioRey/books_microservice/router"
 	"github.com/IgancioRey/books_microservice/utils/db"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"os"
 )
 
 const defaultPort = "8080"

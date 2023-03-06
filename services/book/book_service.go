@@ -1,15 +1,16 @@
 package services
 
 import (
+	"errors"
+
 	bookDao "github.com/IgancioRey/books_microservice/daos/book"
-	"github.com/IgancioRey/books_microservice/dtos"
+	dtos "github.com/IgancioRey/books_microservice/dtos/book"
 	"github.com/IgancioRey/books_microservice/models"
-	e "github.com/IgancioRey/books_microservice/utils/errors"
 )
 
 type bookService struct{}
 type bookServiceInterface interface {
-	InsertBook(bookDto dtos.BookDto) (dtos.BookDto, e.ApiError)
+	InsertBook(bookDto dtos.BookDto) (dtos.BookDto, error)
 }
 
 var (
@@ -20,7 +21,7 @@ func init() {
 	BookService = &bookService{}
 }
 
-func (s *bookService) InsertBook(bookDto dtos.BookDto) (dtos.BookDto, e.ApiError) {
+func (s *bookService) InsertBook(bookDto dtos.BookDto) (dtos.BookDto, error) {
 
 	var book models.Book
 
@@ -29,7 +30,7 @@ func (s *bookService) InsertBook(bookDto dtos.BookDto) (dtos.BookDto, e.ApiError
 	book = bookDao.Insert(book)
 
 	if book.Id.Hex() == "000000000000000000000000" {
-		return bookDto, e.NewBadRequestApiError("error in insert")
+		return bookDto, errors.New("error in insert")
 	}
 	bookDto.Id = book.Id.Hex()
 
