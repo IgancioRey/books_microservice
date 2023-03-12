@@ -2,12 +2,10 @@ package book
 
 import (
 	"fmt"
-	"net/http"
-
 	dtos "github.com/IgancioRey/books_microservice/dtos/book"
 	service "github.com/IgancioRey/books_microservice/services/book"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func Insert(c *gin.Context) {
@@ -31,4 +29,30 @@ func Insert(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, bookDto)
+}
+
+func GetBooks(c *gin.Context) {
+	booksDto, er := service.BookService.GetBooks()
+
+	// Error del Insert
+	if er != nil {
+		c.JSON(http.StatusInternalServerError, er)
+		return
+	}
+
+	c.JSON(http.StatusOK, booksDto)
+}
+
+func Get(c *gin.Context) {
+
+	id := c.Param("id")
+	bookDto, er := service.BookService.GetBook(id)
+
+	// Error del Insert
+	if er != nil {
+		c.JSON(http.StatusInternalServerError, er)
+		return
+	}
+
+	c.JSON(http.StatusOK, bookDto)
 }

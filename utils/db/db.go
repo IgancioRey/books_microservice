@@ -31,7 +31,7 @@ func Init_db() error {
 		return err
 	}
 
-	MongoDb = client.Database("test")
+	MongoDb = client.Database("books_microservice")
 
 	fmt.Println("Available datatabases:")
 	fmt.Println(dbNames)
